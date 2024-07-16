@@ -27,9 +27,6 @@ public class ItemService {
     public Item updateItem(Long id, UpdateItemRequest updateItemRequest) {
         Item item = itemRepository.findById(id).orElseThrow(() -> new
                 IllegalArgumentException("해당 상품이 존재하지 않습니다."));
-        if(updateItemRequest.getName()!= null) item.setName(updateItemRequest.getName());
-        if(updateItemRequest.getCategory()!= null) item.setCategory(updateItemRequest.getCategory());
-        if(updateItemRequest.getPrice()!= null)item.setPrice(updateItemRequest.getPrice());
         itemRepository.save(item);
         return item;
     }
