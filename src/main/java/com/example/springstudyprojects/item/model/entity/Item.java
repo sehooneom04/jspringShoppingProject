@@ -1,19 +1,18 @@
 package com.example.springstudyprojects.item.model.entity;
 
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import com.example.springstudyprojects.orderitem.model.entity.OrderItem;
+import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.List;
 
 @Entity(name = "items")
 @Getter
-@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
-public class Items {
+public class Item {
     @Id
     @GeneratedValue
     private Long id;
@@ -23,8 +22,10 @@ public class Items {
     private String name;
     @Column
     private Category category;
+    @OneToMany(mappedBy = "item")
+    private List<OrderItem> orderItems;
 
-    public Items(String name) {
+    public Item(String name) {
         this.name = name;
     }
 }

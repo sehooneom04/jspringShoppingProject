@@ -1,7 +1,7 @@
 package com.example.springstudyprojects.member.model.entity;
 
 
-import com.example.springstudyprojects.order.model.entity.Orders;
+import com.example.springstudyprojects.order.model.entity.Order;
 import jakarta.persistence.*;
 import lombok.*;
 import java.util.List;
@@ -25,7 +25,7 @@ public class Member {
     private String street;
     private String zipcode;
     @OneToMany(mappedBy = "member")
-    private List<Orders> orders;
+    private List<Order> orders;
 
 
     @Builder

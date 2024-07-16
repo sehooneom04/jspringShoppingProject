@@ -2,7 +2,7 @@ package com.example.springstudyprojects.item.service;
 
 import com.example.springstudyprojects.item.model.dto.CreateItemRequest;
 import com.example.springstudyprojects.item.model.dto.UpdateItemRequest;
-import com.example.springstudyprojects.item.model.entity.Items;
+import com.example.springstudyprojects.item.model.entity.Item;
 import com.example.springstudyprojects.item.repository.ItemRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -15,8 +15,8 @@ import java.util.List;
 public class ItemService {
     private final ItemRepository itemRepository;
 
-    public Items createItem(CreateItemRequest itemRequest) {
-        Items item = Items.builder().
+    public Item createItem(CreateItemRequest itemRequest) {
+        Item item = Item.builder().
                 price(itemRequest.getPrice()).
                 name(itemRequest.getName()).
                 category(itemRequest.getCategory()).build();
@@ -24,8 +24,8 @@ public class ItemService {
         return item;
     }
     @Transactional
-    public Items updateItem(Long id, UpdateItemRequest updateItemRequest) {
-        Items item = itemRepository.findById(id).orElseThrow(() -> new
+    public Item updateItem(Long id, UpdateItemRequest updateItemRequest) {
+        Item item = itemRepository.findById(id).orElseThrow(() -> new
                 IllegalArgumentException("해당 상품이 존재하지 않습니다."));
         if(updateItemRequest.getName()!= null) item.setName(updateItemRequest.getName());
         if(updateItemRequest.getCategory()!= null) item.setCategory(updateItemRequest.getCategory());
@@ -40,7 +40,7 @@ public class ItemService {
                 IllegalArgumentException("해당 상품이 존재하지 않습니다")));
     }
 
-    public List<Items> getItems() {
+    public List<Item> getItems() {
         return itemRepository.findAll();
     }
 }

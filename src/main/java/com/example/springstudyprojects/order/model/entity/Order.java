@@ -1,6 +1,6 @@
 package com.example.springstudyprojects.order.model.entity;
 
-import com.example.springstudyprojects.product.model.entity.Product;
+import com.example.springstudyprojects.orderitem.model.entity.OrderItem;
 import com.example.springstudyprojects.member.model.entity.Member;
 import jakarta.persistence.*;
 import lombok.*;
@@ -8,12 +8,12 @@ import lombok.*;
 import java.util.Date;
 import java.util.List;
 
-@Entity
+@Entity(name = "orders")
 @Builder
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-public class Orders {
+public class Order {
     @Id
     @GeneratedValue
     @Column(name = "order_id")
@@ -25,11 +25,12 @@ public class Orders {
     @JoinColumn(name = "member_id")
     private Member member;
     @OneToMany(mappedBy = "order")
-    private List<Product> products;
+    private List<OrderItem> orderItems;
 
     public void setTotalPrice(){
-        for(Product p:products){
-            totalPrice += p.getPrice();
+        totalPrice = Long.valueOf(0);
+        for(OrderItem i:orderItems){
+            totalPrice += i.getItem().getPrice();
         }
     }
     public void setOrderStatus(OrderStatus os){
