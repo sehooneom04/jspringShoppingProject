@@ -25,7 +25,7 @@ public class MemberControllerV1 {
         memberService.saveMember(member);
         return "Success";
     }
-    @GetMapping("/{id}") //{} pass bariable
+    @GetMapping("/{id}") //{} path variable
     public String findMember(@PathVariable Long id){
         Member member = memberService.findMember(id);
         return member.getName();

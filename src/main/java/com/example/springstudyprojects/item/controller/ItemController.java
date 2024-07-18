@@ -20,15 +20,20 @@ public class ItemController {
         Item item = itemService.createItem(itemRequest);
         return item.getName();
     }
-    @GetMapping
-    public List<String> getItems(){
-        List<Item> items = itemService.getItems();
-        return items.stream().map(item -> item.getName()).collect(Collectors.toList());
+    @GetMapping("/{id}")
+    public @ResponseBody Item findItem(@PathVariable(name = "id") Long id){
+        Item item = itemService.findItem(id);
+        return item;
     }
     @PatchMapping("/{id}")
     public String updateItem(@PathVariable(name = "id") Long id, @RequestBody UpdateItemRequest updateItemRequest){
         Item item = itemService.updateItem(id, updateItemRequest);
         return item.getName();
+    }
+    @GetMapping
+    public List<Long> findItemsOver10000(){
+        List<Item> items = itemService.findItemsOver10000();
+        return items.stream().map(item -> item.getId()).collect(Collectors.toList());
     }
     @DeleteMapping("/{id}")
     public void deleteItem(@PathVariable(name = "id") Long id){

@@ -27,7 +27,7 @@ public class OrderService {
                 IllegalArgumentException("존재하지 않는 주문입니다.")));
     }
 
-    public List<Order> getOrders(){ return orderRepository.findAll();}
+    public Order findOrder(Long id){ return orderRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 주문입니다."));}
 
     public void updateTotalPrice(Long id){
         orderRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 주문입니다.")).setTotalPrice();

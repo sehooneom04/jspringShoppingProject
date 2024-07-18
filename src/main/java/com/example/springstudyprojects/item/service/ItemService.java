@@ -8,6 +8,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -27,17 +28,33 @@ public class ItemService {
     public Item updateItem(Long id, UpdateItemRequest updateItemRequest) {
         Item item = itemRepository.findById(id).orElseThrow(() -> new
                 IllegalArgumentException("해당 상품이 존재하지 않습니다."));
-        itemRepository.save(item);
+        Item newItem = Item.builder().
+                id(item.getId()).
+                price(updateItemRequest.getPrice()).
+                name(updateItemRequest.getName()).
+                category(updateItemRequest.getCategory()).build();
+        itemRepository.save(newItem);
         return item;
     }
 
+    public List<Item> findItemsOver10000(){
+        List<Item> itemsOver10000 = itemRepository.findAll();
+        for(Item i:itemsOver10000){
+            if(i.getPrice() <= 10000){
+                itemsOver10000.remove(i);
+            }
+        }
+        return itemsOver10000;
+    }
 
     public void deleteItem(Long id) {
         itemRepository.delete(itemRepository.findById(id).orElseThrow(() -> new
                 IllegalArgumentException("해당 상품이 존재하지 않습니다")));
     }
 
-    public List<Item> getItems() {
-        return itemRepository.findAll();
+    public Item findItem(Long id) {
+        Item item = itemRepository.findById(id).orElseThrow(() -> new
+                IllegalArgumentException("해당 상품이 존재하지 않습니다."));
+        return item;
     }
 }
