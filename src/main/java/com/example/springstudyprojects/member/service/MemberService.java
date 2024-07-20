@@ -4,10 +4,12 @@ import com.example.springstudyprojects.global.SecurtiryConfig;
 import com.example.springstudyprojects.member.model.dto.SignUpRequest;
 import com.example.springstudyprojects.member.model.entity.Member;
 import com.example.springstudyprojects.member.repository.MemberRepository;
+import com.example.springstudyprojects.order.model.entity.Order;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -43,5 +45,8 @@ public class MemberService {
         memberRepository.delete(memberRepository.findById(id).orElseThrow(() -> new
                 IllegalArgumentException("존재하지 않는 회원입니다.")));
     }
-
+    public List<Order> findEveryOrder(Long id){
+        Member member = findMember(id);
+        return member.getOrders();
+    }
 }

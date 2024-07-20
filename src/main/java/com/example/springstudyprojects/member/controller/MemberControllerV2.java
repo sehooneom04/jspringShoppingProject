@@ -2,8 +2,12 @@ package com.example.springstudyprojects.member.controller;
 
 import com.example.springstudyprojects.member.model.dto.SignUpRequest;
 import com.example.springstudyprojects.member.service.MemberService;
+import com.example.springstudyprojects.order.model.entity.Order;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/member/v2")
@@ -19,8 +23,14 @@ public class MemberControllerV2 {
         return memberService.signUp(request);
     }
 
-    @DeleteMapping
-    public void delete(@RequestParam Long id){
+    @DeleteMapping("/{id")
+    public void delete(@PathVariable(name = "id") Long id){
         memberService.deleteMember(id);
+    }
+
+    @GetMapping
+    public @ResponseBody List<Long> findEveryOrder(@PathVariable Long id){
+        List<Order> orders = memberService.findEveryOrder(id);
+        return orders.stream().map(order -> order.getId()).collect(Collectors.toList());
     }
 }
