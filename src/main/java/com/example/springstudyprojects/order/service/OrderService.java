@@ -1,11 +1,13 @@
 package com.example.springstudyprojects.order.service;
 
+import com.example.springstudyprojects.orderitem.model.entity.OrderItem;
 import com.example.springstudyprojects.order.model.dto.NewOrderRequest;
 import com.example.springstudyprojects.order.model.entity.OrderStatus;
 import com.example.springstudyprojects.order.model.entity.Order;
 import com.example.springstudyprojects.order.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
 
 import java.util.List;
 
@@ -30,11 +32,15 @@ public class OrderService {
     public Order findOrder(Long id){ return orderRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 주문입니다."));}
 
     public void updateTotalPrice(Long id){
-        orderRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 주문입니다.")).setTotalPrice();
+        findOrder(id).setTotalPrice();
     }
     public void updateOrderStatus(Long id){
-        Order order = orderRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 주문입니다."));
+        Order order = findOrder(id);
         if(order.getOrderStatus().equals(OrderStatus.FINISHED)) order.setOrderStatus(OrderStatus.NOTFINISHED);
         else order.setOrderStatus(OrderStatus.FINISHED);
+    }
+    public List<OrderItem> findEveryItemByOrder(Long id){
+        Order order = findOrder(id);
+        return order.getOrderItems();
     }
 }

@@ -42,4 +42,9 @@ public class OrderController {
     public void updateOrderStatus(@PathVariable(name = "id") Long id) {
         orderService.updateOrderStatus(id);
     }
+
+    @GetMapping
+    public List<Long> findItemsByOrder(@PathVariable(name = "id") Long id){
+        return orderService.findEveryItemByOrder(id).stream().map((order) -> order.getId()).collect(Collectors.toList());
+    }
 }
